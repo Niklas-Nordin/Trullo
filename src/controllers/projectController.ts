@@ -1,17 +1,25 @@
+import { Types } from "mongoose";
 import Project from "../models/Project.js";
 import { Request, Response } from "express";
 
-export const createProject = async (req: Request, res: Response) => {
+interface ProtectedRequest extends Request {
+  user?: { id: string };
+}
+
+export const createProject = async (req: ProtectedRequest, res: Response) => {
   try {
-    const { name, description } = req.body;
+    const { name, description, members } = req.body;
+    const adminId = req.user?.id;
+    const membersIds = members || [];
 
-    const newProject = await Project.create({
-      name,
-      description,
-    });
+    const validatedMembers = membersIds.filter((id: string) => Types.ObjectId.isValid(id));
 
-    if (!newProject) {
-      return res.status(500).json({ message: "Failed to create project" });
+    if (!adminId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    if(adminId && !validatedMembers.includes(adminId)) {
+      validatedMembers.push(adminId);
     }
 
     if (!name || name.trim().length === 0) {
@@ -23,6 +31,15 @@ export const createProject = async (req: Request, res: Response) => {
         .status(400)
         .json({ message: "Project description is required" });
     }
+
+    const newProject = await Project.create({
+      name,
+      description,
+      admin: adminId,
+      members: validatedMembers,
+    });
+
+    res.status(201).json({ message: "Project created", project: newProject });
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
   }

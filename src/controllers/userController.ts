@@ -8,11 +8,12 @@ dotenv.config();
 
 const SALT_ROUNDS = 10;
 
-export const createUser = async (req: Request, res: Response) => {
+export const signUp = async (req: Request, res: Response) => {
   try {
     const { username, email, password } = req.body;
 
     const existingUser = await User.findOne({ email });
+
     if (existingUser) {
       return res.status(400).json({ message: "Email already in use" });
     }
@@ -46,7 +47,7 @@ export const signIn = async (req: Request, res: Response) => {
   try {
     const { email, username, password } = req.body;
 
-    if (!password || !email || !username) {
+    if (!password || (!email && !username)) {
       return res.status(400).json({ message: "Login credentials required" });
     }
 
