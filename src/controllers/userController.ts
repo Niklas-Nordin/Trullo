@@ -1,6 +1,10 @@
 import { User } from "../models/User.js";
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const SALT_ROUNDS = 10;
 
@@ -33,6 +37,58 @@ export const createUser = async (req: Request, res: Response) => {
     });
 
     res.status(201).json({ message: "User created", user: newUser });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+};
+
+export const signIn = async (req: Request, res: Response) => {
+  try {
+    const { email, username, password } = req.body;
+
+    if (!password || !email || !username) {
+      return res.status(400).json({ message: "Login credentials required" });
+    }
+
+    const user = await User.findOne({ $or: [{ email }, { username }] });
+
+    if (!user) {
+      return res.status(400).json({ message: "Invalid login credentials" });
+    }
+
+    const matchPassword = await bcrypt.compare(password, user.password);
+
+    if (!matchPassword) {
+      return res.status(400).json({ message: "Invalid login credentials" });
+    }
+
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET as string, {
+      expiresIn: "1h",
+    });
+
+    res.cookie("token", token, { 
+      httpOnly: true, 
+      secure: process.env.NODE_ENV === "production", 
+      maxAge: 3600000,
+      sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax"
+    });
+
+    res.status(200).json({ message: "Login successful", token: token, user: user });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+};
+
+export const getUsers = async (req: Request, res: Response) => {
+  try {
+    const users = await User.find().select("-password");
+
+    if (users.length === 0) {
+      return res.status(404).json({ message: "No users found" });
+    }
+
+    res.status(200).json(users);
+
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
   }

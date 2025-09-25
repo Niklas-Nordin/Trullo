@@ -8,6 +8,7 @@ interface ITask extends Document {
   project: Types.ObjectId;
   createdAt: Date;
   finishedAt: Date | null;
+  finishedBy: Types.ObjectId | null;
 }
 
 const taskSchema = new Schema<ITask>({
@@ -52,6 +53,11 @@ const taskSchema = new Schema<ITask>({
     type: Date,
     default: null,
   },
+  finishedBy: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    default: null,
+  }
 });
 
 export default model<ITask>("Task", taskSchema);
