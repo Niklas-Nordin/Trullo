@@ -1,6 +1,7 @@
 import { Document, model, Types, Schema } from "mongoose";
 
-interface ITask extends Document {
+export interface ITask extends Document {
+  _id: Types.ObjectId;
   title: string;
   description: string;
   status: "to-do" | "in progress" | "blocked" | "done";

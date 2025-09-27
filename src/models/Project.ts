@@ -1,6 +1,6 @@
-import { Schema, model, Types } from "mongoose";
+import { Schema, model, Types, Document } from "mongoose";
 
-interface IProject {
+export interface IProject extends Document {
   name: string;
   description: string;
   admin: Types.ObjectId;
