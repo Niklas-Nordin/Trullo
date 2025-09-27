@@ -6,6 +6,17 @@ interface ProtectedRequest extends Request {
   user?: { id: string };
 }
 
+interface SetFields {
+  name?: string;
+  description?: string;
+}
+
+interface UpdateQuery {
+  $set?: SetFields;
+  $addToSet?: { members: string };
+  $pull?: { members: string };
+}
+
 export const createProject = async (req: ProtectedRequest, res: Response) => {
   try {
     const { name, description, members } = req.body;
@@ -99,13 +110,83 @@ export const getProjectById = async (req: ProtectedRequest, res: Response) => {
   }
 };
 
-//TODO: update project
-const updateProject = async (req: ProtectedRequest, res: Response) => {
+export const updateProject = async (req: ProtectedRequest, res: Response) => {
   try {
     const userId = req.user?.id;
+    const {name, description, addMemberId, removeMemberId } = req.body;
+    const projectId = req.params.id;
+    const setFields: SetFields = {};
+    const updateQuery: UpdateQuery = {};
+    const project = await Project.findById(projectId);
+
+    if(!userId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    if (!projectId || !Types.ObjectId.isValid(projectId)) {
+      return res.status(400).json({ message: "Invalid project ID" });
+    }
+
+    if(name !== undefined) {
+      setFields.name = name;
+    }
+
+    if(description !== undefined) {
+      setFields.description = description;
+    }
+
+    if(Object.keys(setFields).length > 0) {
+      updateQuery.$set = setFields;
+    }
+
+    if(addMemberId) {
+      if(!Types.ObjectId.isValid(addMemberId)) {
+        return res.status(400).json({ message: "Invalid member ID" });
+      }
+
+      updateQuery.$addToSet = { members: addMemberId };
+
+      if(addMemberId === userId) {
+        return res.status(400).json({ message: "Admin is already a member" });
+      }
+
+      if (project?.members.map(m => m.toString().includes(addMemberId))) {
+        return res.status(400).json({ message: "User is already a member" });
+      }
+    }
+
+    if(removeMemberId) {
+      if(!Types.ObjectId.isValid(removeMemberId)) {
+        return res.status(400).json({ message: "Invalid member ID" });
+      }
+      updateQuery.$pull = { members: removeMemberId };
+
+      if (removeMemberId === userId) {
+        return res.status(400).json({ message: "Admin cannot be removed" });
+      }
+    }
+
+    const updatedProject = await Project.findByIdAndUpdate(
+      projectId,
+      updateQuery,
+      { new: true, runValidators: true }
+    )
+    .populate("admin", "-password")
+    .populate("members", "-password")
+    .populate("tasks");
+
+    if (!updatedProject) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    if (updatedProject.admin.id.toString() !== userId) {
+      return res.status(403).json({ message: "Access denied" });
+    }
+
+    res.status(200).json({ message: "Project updated", project: updatedProject });
     
   } catch (error) {
-    
+    res.status(500).json({ message: "Server error", error });
   }
 };
 
