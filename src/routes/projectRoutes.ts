@@ -1,4 +1,4 @@
-import { createProject, getAllProjects, getProjectById, updateProject } from "../controllers/projectController.js";
+import { createProject, getAllProjects, getProjectById, updateProject, deleteProject } from "../controllers/projectController.js";
 import { authMiddleware } from "../middlewares/authMiddleware.js";
 import { Router } from "express";
 
@@ -9,5 +9,6 @@ router.post("/create", authMiddleware, createProject);
 
 router.get("/:id", authMiddleware, getProjectById);
 router.put("/:id", authMiddleware, updateProject);
+router.delete("/:id", authMiddleware, deleteProject);
 
 export default router;

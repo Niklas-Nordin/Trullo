@@ -190,5 +190,32 @@ export const updateProject = async (req: ProtectedRequest, res: Response) => {
   }
 };
 
+export const deleteProject = async (req: ProtectedRequest, res: Response) => {
+  try {
+    const userId = req.user?.id;
+    const projectId = req.params.id;
 
-// TODO: delete project
+    if (!userId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    if (!projectId || !Types.ObjectId.isValid(projectId)) {
+      return res.status(400).json({ message: "Invalid project ID" });
+    }
+
+    const project = await Project.findByIdAndDelete(projectId);
+
+    if (!project) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    if (project.admin.toString() !== userId) {
+      return res.status(403).json({ message: "Only creator of this project can delete" });
+    }
+
+    res.status(200).json({ message: "Project deleted", project });
+
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+};
