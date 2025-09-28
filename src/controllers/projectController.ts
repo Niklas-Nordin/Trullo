@@ -150,7 +150,7 @@ export const updateProject = async (req: ProtectedRequest, res: Response) => {
         return res.status(400).json({ message: "Admin is already a member" });
       }
 
-      if (project?.members.map(m => m.toString().includes(addMemberId))) {
+      if (project?.members.map(m => m.toString()).includes(addMemberId)) {
         return res.status(400).json({ message: "User is already a member" });
       }
     }

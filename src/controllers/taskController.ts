@@ -77,7 +77,7 @@ export const getAllTasks = async (req: ProtectedRequest, res: Response) => {
       return res.status(404).json({ message: "Project not found" });
     }
 
-    if (!project.members.map(m => m.toString()).includes(userId) && project.admin.toString() !== userId) {
+    if (!project.members.map(m => m.toString()).includes(userId)) {
       return res.status(403).json({ message: "Forbidden: Not a member of the project" });
     }
 
@@ -113,7 +113,7 @@ export const getTask = async (req: ProtectedRequest, res: Response) => {
       return res.status(404).json({ message: "Project not found" });
     }
 
-    if (!project.members.map(m => m.toString()).includes(userId) && project.admin.toString() !== userId) {
+    if (!project.members.map(m => m.toString()).includes(userId)) {
       return res.status(403).json({ message: "Forbidden: Not a member of the project" });
     }
 
@@ -125,7 +125,7 @@ export const getTask = async (req: ProtectedRequest, res: Response) => {
     if (!task) {
       return res.status(404).json({ message: "Task not found" });
     }
-    
+
     res
       .status(200)
       .json({ message: "Task successfully retrieved", task: task });
@@ -134,13 +134,37 @@ export const getTask = async (req: ProtectedRequest, res: Response) => {
   }
 };
 
-export const updateTask = async (req: Request, res: Response) => {
+export const updateTask = async (req: ProtectedRequest, res: Response) => {
   try {
+    const userId = req.user?.id;
+    const projectId = req.params.projectId;
     const taskId = req.params.id;
     const updateData = req.body;
 
+    if (!userId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    if (!projectId) {
+      return res.status(400).json({ message: "Project ID is required" });
+    }
+
+    if (!taskId) {
+      return res.status(400).json({ message: "Task ID is required" });
+    }
+
+    const project = await Project.findById(projectId)
+
+    if(!project) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    if (!project.members.map(m => m.toString()).includes(userId)) {
+      return res.status(403).json({ message: "Forbidden: Not a member of the project" });
+    }
+
     const updatedTask = await Task.findByIdAndUpdate(
-      taskId,
+      { _id: taskId, project: projectId },
       { $set: updateData },
       { new: true, runValidators: true }
     );
@@ -155,10 +179,25 @@ export const updateTask = async (req: Request, res: Response) => {
   }
 };
 
-export const deleteTask = async (req: Request, res: Response) => {
+export const deleteTask = async (req: ProtectedRequest, res: Response) => {
   try {
+    const userId = req.user?.id;
+    const projectId = req.params.projectId;
     const taskId = req.params.id;
-    const deletedTask = await Task.findByIdAndDelete(taskId);
+
+    if (!userId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    if (!projectId) {
+      return res.status(400).json({ message: "Project ID is required" });
+    }
+
+    if (!taskId) {
+      return res.status(400).json({ message: "Task ID is required" });
+    }
+
+    const deletedTask = await Task.findByIdAndDelete({ _id: taskId, project: projectId });
 
     if (!deletedTask) {
       return res.status(404).json({ message: "Task not found" });
