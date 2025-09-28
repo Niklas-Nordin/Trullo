@@ -1,6 +1,7 @@
 import { Types } from "mongoose";
 import Project from "../models/Project.js";
 import { Request, Response } from "express";
+import { User } from "../models/User.js";
 
 interface ProtectedRequest extends Request {
   user?: { id: string };
@@ -144,15 +145,20 @@ export const updateProject = async (req: ProtectedRequest, res: Response) => {
         return res.status(400).json({ message: "Invalid member ID" });
       }
 
-      updateQuery.$addToSet = { members: addMemberId };
-
+      const userExists = await User.findById(addMemberId);
+      if(!userExists) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      
       if(addMemberId === userId) {
         return res.status(400).json({ message: "Admin is already a member" });
       }
-
+      
       if (project?.members.map(m => m.toString()).includes(addMemberId)) {
         return res.status(400).json({ message: "User is already a member" });
       }
+      
+      updateQuery.$addToSet = { members: addMemberId };
     }
 
     if(removeMemberId) {
@@ -164,6 +170,10 @@ export const updateProject = async (req: ProtectedRequest, res: Response) => {
       if (removeMemberId === userId) {
         return res.status(400).json({ message: "Admin cannot be removed" });
       }
+    }
+
+    if (!updateQuery.$set && !updateQuery.$addToSet && !updateQuery.$pull) {
+      return res.status(400).json({ message: "No valid update fields provided" });
     }
 
     const updatedProject = await Project.findByIdAndUpdate(
