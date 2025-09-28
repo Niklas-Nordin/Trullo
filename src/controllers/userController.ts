@@ -113,28 +113,31 @@ export const getUser = async (req: Request, res: Response) => {
 export const updateUser = async (req: Request, res: Response) => {
   try {
     const userId = req.params.id;
-    const updateData = req.body;
+    const { username, email, password } = req.body;
 
-    delete updateData.username;
+    const user = await User.findById(userId);
 
-    const updatedUser = await User.findByIdAndUpdate(
-      userId,
-      { $set: updateData },
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
-
-    if (!updatedUser) {
+    if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    if (updateData.username !== updatedUser.username) {
+    if (username && username !== user.username) {
       return res.status(400).json({ message: "Username cannot be changed" });
     }
 
-    res.status(200).json({ message: "User updated", user: updatedUser });
+    if (email) {
+      user.email = email;
+    }
+    if (password) {
+      if (password.length < 8) {
+        return res.status(400).json({ message: "Password must be at least 8 characters long" });
+      }
+      user.password = password;
+    }
+
+    await user.save();
+
+    res.status(200).json({ message: "User updated", user: user });
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
   }
