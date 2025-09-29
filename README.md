@@ -1,3 +1,23 @@
+# Körguide
+
+**1.**
+```json
+npm install
+```
+
+**2.**
+- Kopiera `.env.example` till `.env` och fyll i egna värden.
+
+**3.**
+```json
+npm run dev
+```
+
+**4.**
+- Testa endpointsen i ThunderClient, Postman eller liknande
+- Endpoints finns längst ned på sidan
+
+
 # Motivera ditt val av databas
 
 Jag har valt att använda MongoDB tillsammans med Mongoose. Anledningen till valet av databas är att jag först och främst vill se hur det är att jobba med en NoSQL databas, då jag redan gjort det med SQL. MongoDB passar bra för projektet eftersom datamodellen är relativt enkel och dokumentbaserad, vilket gör det smidigt att lagra uppgifter (Tasks) och användare (Users) utan strikt schema.

@@ -223,7 +223,7 @@ export const deleteProject = async (req: ProtectedRequest, res: Response) => {
       return res.status(403).json({ message: "Only creator of this project can delete" });
     }
 
-    res.status(200).json({ message: "Project deleted", project });
+    res.status(204).send();
 
   } catch (error) {
     res.status(500).json({ message: "Server error", error });

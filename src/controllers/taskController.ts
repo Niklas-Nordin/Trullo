@@ -219,7 +219,7 @@ export const deleteTask = async (req: ProtectedRequest, res: Response) => {
     project.tasks = project.tasks.filter(taskId => !taskId.equals(deletedTask._id));
     await project.save();
 
-    res.status(200).json({ message: "Task deleted", task: deletedTask });
+    res.status(204).send();
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
   }
