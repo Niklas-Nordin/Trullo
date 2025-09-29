@@ -7,9 +7,9 @@ const router = express.Router();
 // User routes
 router.post("/signup", signUp);
 router.post("/login", signIn);
-router.get("/", getUsers);
-router.get("/:id", getUser);
-router.put("/:id", updateUser);
-router.delete("/:id", deleteUser);
+router.get("/", authMiddleware, getUsers);
+router.get("/:id", authMiddleware, getUser);
+router.put("/:id", authMiddleware, updateUser);
+router.delete("/:id", authMiddleware, deleteUser);
 
 export default router;

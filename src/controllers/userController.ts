@@ -4,6 +4,10 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
+interface ProtectedRequest extends Request {
+  user?: { id: string };
+}
+
 dotenv.config();
 
 const SALT_ROUNDS = 10;
@@ -80,8 +84,14 @@ export const signIn = async (req: Request, res: Response) => {
   }
 };
 
-export const getUsers = async (req: Request, res: Response) => {
+export const getUsers = async (req: ProtectedRequest, res: Response) => {
   try {
+    const userId = req.user?.id;
+
+    if (!userId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
     const users = await User.find().select("-password");
 
     if (users.length === 0) {
@@ -95,9 +105,19 @@ export const getUsers = async (req: Request, res: Response) => {
   }
 };
 
-export const getUser = async (req: Request, res: Response) => {
+export const getUser = async (req: ProtectedRequest, res: Response) => {
   try {
-    const userId = req.params.id;
+    const userId = req.user?.id;
+    const targetUserId = req.params.id;
+
+    if (!userId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    if (!targetUserId) {
+      return res.status(400).json({ message: "User ID is required" });
+    }
+
     const user = await User.findById(userId).select("-password");
 
     if (!user) {
@@ -110,11 +130,20 @@ export const getUser = async (req: Request, res: Response) => {
   }
 };
 
-export const updateUser = async (req: Request, res: Response) => {
+export const updateUser = async (req: ProtectedRequest, res: Response) => {
   try {
-    const userId = req.params.id;
+    const userId = req.user?.id;
+    const targetUserId = req.params.id;
     const { username, email, password } = req.body;
 
+    if (!userId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    if (userId !== targetUserId) {
+      return res.status(403).json({ message: "Forbidden: You can only update your own account" });
+    }
+    
     const user = await User.findById(userId);
 
     if (!user) {
@@ -143,9 +172,18 @@ export const updateUser = async (req: Request, res: Response) => {
   }
 };
 
-export const deleteUser = async (req: Request, res: Response) => {
+export const deleteUser = async (req: ProtectedRequest, res: Response) => {
   try {
-    const userId = req.params.id;
+    const userId = req.user?.id;
+    const targetUserId = req.params.id;
+
+    if (!userId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    if (userId !== targetUserId) {
+      return res.status(403).json({ message: "Forbidden: You can only delete your own account" });
+    }
 
     const deleteUser = await User.findByIdAndDelete(userId);
 
