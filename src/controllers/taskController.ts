@@ -1,6 +1,7 @@
 import Task, {ITask} from "../models/Task.js";
 import { Request, Response } from "express";
 import Project, { IProject } from "../models/Project.js";
+import { Types } from "mongoose";
 
 interface ProtectedRequest extends Request {
   user?: { id: string };
@@ -173,6 +174,12 @@ export const updateTask = async (req: ProtectedRequest, res: Response) => {
       return res.status(404).json({ message: "Task not found" });
     }
 
+    if (updateData.status === "done") {
+      updatedTask.finishedAt = new Date();
+      updatedTask.finishedBy = new Types.ObjectId(userId);
+      await updatedTask.save();
+    }
+
     res.status(200).json({ message: "Task updated", task: updatedTask });
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
@@ -197,11 +204,20 @@ export const deleteTask = async (req: ProtectedRequest, res: Response) => {
       return res.status(400).json({ message: "Task ID is required" });
     }
 
-    const deletedTask = await Task.findByIdAndDelete({ _id: taskId, project: projectId });
+    const project = await Project.findById(projectId)
+
+    if(!project) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    const deletedTask = await Task.findOneAndDelete({ _id: taskId, project: projectId });
 
     if (!deletedTask) {
       return res.status(404).json({ message: "Task not found" });
     }
+
+    project.tasks = project.tasks.filter(taskId => !taskId.equals(deletedTask._id));
+    await project.save();
 
     res.status(200).json({ message: "Task deleted", task: deletedTask });
   } catch (error) {
