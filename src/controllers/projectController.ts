@@ -8,7 +8,7 @@ interface ProtectedRequest extends Request {
 }
 
 interface SetFields {
-  name?: string;
+  title?: string;
   description?: string;
 }
 
@@ -20,7 +20,7 @@ interface UpdateQuery {
 
 export const createProject = async (req: ProtectedRequest, res: Response) => {
   try {
-    const { name, description, members } = req.body;
+    const { title, description, members } = req.body;
     const adminId = req.user?.id;
     const membersIds = members || [];
 
@@ -34,7 +34,7 @@ export const createProject = async (req: ProtectedRequest, res: Response) => {
       validatedMembers.push(adminId);
     }
 
-    if (!name || name.trim().length === 0) {
+    if (!title || title.trim().length === 0) {
       return res.status(400).json({ message: "Project name is required" });
     }
 
@@ -45,7 +45,7 @@ export const createProject = async (req: ProtectedRequest, res: Response) => {
     }
 
     const newProject = await Project.create({
-      name,
+      title,
       description,
       admin: adminId,
       members: validatedMembers,
@@ -114,7 +114,7 @@ export const getProjectById = async (req: ProtectedRequest, res: Response) => {
 export const updateProject = async (req: ProtectedRequest, res: Response) => {
   try {
     const userId = req.user?.id;
-    const {name, description, addMemberId, removeMemberId } = req.body;
+    const {title, description, addMemberId, removeMemberId } = req.body;
     const projectId = req.params.id;
     const setFields: SetFields = {};
     const updateQuery: UpdateQuery = {};
@@ -128,8 +128,8 @@ export const updateProject = async (req: ProtectedRequest, res: Response) => {
       return res.status(400).json({ message: "Invalid project ID" });
     }
 
-    if(name !== undefined) {
-      setFields.name = name;
+    if(title !== undefined) {
+      setFields.title = title;
     }
 
     if(description !== undefined) {

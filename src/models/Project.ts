@@ -1,7 +1,7 @@
 import { Schema, model, Types, Document } from "mongoose";
 
 export interface IProject extends Document {
-  name: string;
+  title: string;
   description: string;
   admin: Types.ObjectId;
   members: Types.ObjectId[];
@@ -10,7 +10,7 @@ export interface IProject extends Document {
 }
 
 const projectSchema = new Schema<IProject>({
-  name: {
+  title: {
     type: String,
     required: true,
     trim: true,
@@ -51,6 +51,6 @@ const projectSchema = new Schema<IProject>({
   },
 });
 
-projectSchema.index({ name: 1, admin: 1 }, { unique: true });
+projectSchema.index({ title: 1, admin: 1 }, { unique: true });
 
 export default model<IProject>("Project", projectSchema);

@@ -26,3 +26,28 @@ Redogör vad de olika teknikerna (ex. verktyg, npm-paket, etc.) gör i applikati
 Redogör översiktligt hur applikationen fungerar
 ---
 
+Berätta här
+
+# API Endpoints
+
+## USERS
+
+### Skapa konto
+**POST** `/api/users/register`  
+Body:
+```json
+{
+  "username": "testuser",
+  "email": "test@test.com",
+  "password": "123456"
+}
+```
+
+### Logga in
+**POST** `/api/users/login`
+Body:
+```json
+{
+  "username": "testuser",
+  "password": "123456"
+}
