@@ -57,13 +57,13 @@ export const signUp = async (req: Request, res: Response) => {
 
 export const signIn = async (req: Request, res: Response) => {
   try {
-    const { email, username, password } = req.body;
+    const { identifier, password } = req.body;
 
-    if (!password || (!email && !username)) {
+    if (!password || !identifier) {
       return res.status(400).json({ message: "Login credentials required" });
     }
 
-    const user = await User.findOne({ $or: [{ email }, { username }] });
+    const user = await User.findOne({ $or: [{ email: identifier }, { username: identifier }] });
 
     if (!user) {
       return res.status(400).json({ message: "Invalid login credentials" });
