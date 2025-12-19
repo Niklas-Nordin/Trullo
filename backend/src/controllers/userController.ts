@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import { error } from "console";
 
 interface ProtectedRequest extends Request {
   user?: { id: string };
@@ -15,22 +16,29 @@ const SALT_ROUNDS = 10;
 export const signUp = async (req: Request, res: Response) => {
   try {
     const { username, email, password } = req.body;
+    const errors: Record<string, string> = {};
 
     const existingEmail = await User.findOne({ email });
 
+    if (!email) errors.email = "Email is required";
+    if (!username) errors.username = "Username is required";
+    if (!password) errors.password = "Password is required";
+
     if (existingEmail) {
-      return res.status(400).json({ message: "Email already in use" });
+      errors.email = "Email already in use";
     }
 
     const existingUsername = await User.findOne({ username });
     if (existingUsername) {
-      return res.status(400).json({ message: "Username already in use" });
+      errors.username = "Username already in use";
     }
 
     if (password.length < 8) {
-      return res
-        .status(400)
-        .json({ message: "Password must be at least 8 characters long" });
+      errors.password = "Password must be at least 8 characters long";
+    }
+
+    if (Object.keys(errors).length > 0) {
+      return res.status(400).json({ errors });
     }
 
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
@@ -43,7 +51,7 @@ export const signUp = async (req: Request, res: Response) => {
 
     res.status(201).json({ message: "User created", user: newUser });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error });
+    res.status(500).json({ message: "Something went wrong. Please try again later.", error });
   }
 };
 

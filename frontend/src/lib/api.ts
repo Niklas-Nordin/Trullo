@@ -20,7 +20,7 @@ export async function signUp(username: string, email: string, password: string) 
     const data = await res.json();
 
     if(!res.ok) {
-        throw new Error(data.message || 'Failed to sign up');
+        throw data
     }
 
     return data;
