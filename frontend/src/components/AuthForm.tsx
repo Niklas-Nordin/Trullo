@@ -76,18 +76,19 @@ function AuthForm({mode}: Props) {
             {generalError && <p className={styles.errorMessage}>{generalError}</p>}
                 {mode === "signup" && (
                     <>
+                        <h2 className={styles.h2}>Register</h2>
                         <div className={styles.inputContainer}>
-                            <label htmlFor="username">Username:</label>
+                            {/* <label htmlFor="username">Username:</label> */}
                             {usernameError && <p className={styles.errorMessage}>{usernameError}</p>}
-                            <input type="text" id="username" value={username} onChange={(e) => {
+                            <input placeholder="Username:" type="text" id="username" value={username} onChange={(e) => {
                                 setUsername(e.target.value)
                                 if(usernameError) setUsernameError("")
                             }} className={styles.inputField} />
                         </div>
                         <div className={styles.inputContainer}>
-                            <label htmlFor="email">Email:</label>
+                            {/* <label htmlFor="email">Email:</label> */}
                             {emailError && <p className={styles.errorMessage}>{emailError}</p>}
-                            <input type="email" id="email" value={email} onChange={(e) => {
+                            <input placeholder="Email:" type="email" id="email" value={email} onChange={(e) => {
                                 setEmail(e.target.value)
                                 if(emailError) setEmailError("")
                             }} className={styles.inputField} />
@@ -95,34 +96,36 @@ function AuthForm({mode}: Props) {
                     </>
                 )}
                 {mode === "login" && (
+
                     <div className={styles.inputContainer}>
-                        <label htmlFor="identifier">Email or Username:</label>
+                        <h2 className={styles.h2}>Sign In</h2>
+                        {/* <label htmlFor="identifier">Email or Username:</label> */}
                         {identifierError && <p className={styles.errorMessage}>{identifierError}</p>}
-                        <input type="text" id="identifier" value={identifier} onChange={(e) => {
+                        <input placeholder="Email or Username:" type="text" id="identifier" value={identifier} onChange={(e) => {
                             setIdentifier(e.target.value)
                             if(identifierError) setIdentifierError("")
                         }} className={styles.inputField} />
                     </div>
                 )}
                 <div className={styles.inputContainer}>
-                    <label htmlFor="password">Password:</label>
+                    {/* <label htmlFor="password">Password:</label> */}
                     {passwordError && <p className={styles.errorMessage}>{passwordError}</p>}
-                    <input type="password" id="password" value={password} onChange={(e) => {
+                    <input placeholder="Password:" type="password" id="password" value={password} onChange={(e) => {
                         setPassword(e.target.value)
                         if(passwordError) setPasswordError("")
                     }} className={styles.inputField} />
                 </div>
                 {mode === "signup" && (
                     <div className={styles.inputContainer}>
-                        <label htmlFor="confirmPassword">Confirm Password:</label>
+                        {/* <label htmlFor="confirmPassword">Confirm Password:</label> */}
                         {confirmPasswordError && <p className={styles.errorMessage}>{confirmPasswordError}</p>}
-                        <input type="password" id="confirmPassword" value={confirmPassword} onChange={(e) => {
+                        <input placeholder="Confirm Password:" type="password" id="confirmPassword" value={confirmPassword} onChange={(e) => {
                             setConfirmPassword(e.target.value)
                             if(confirmPasswordError) setConfirmPasswordError("")
                         }} className={styles.inputField} />
                     </div>
                 )}
-                <button type="submit">{mode === "login" ? "Sign In" : "Register"}</button>
+                <button type="submit" className={styles.btn}>{mode === "login" ? "Sign In" : "Register"}</button>
             </form>
         </div>
     );
