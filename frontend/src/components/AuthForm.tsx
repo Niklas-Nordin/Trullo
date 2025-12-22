@@ -31,6 +31,7 @@ function AuthForm({mode}: Props) {
         setEmailError("");
         setPasswordError("");
         setConfirmPasswordError("");
+        setIdentifierError("");
         setGeneralError("");
 
         if (mode === "signup" && password !== confirmPassword) {
@@ -61,6 +62,9 @@ function AuthForm({mode}: Props) {
                 if (error.errors.email) {
                     setEmailError(error.errors.email);
                 }
+                if (error.errors.identifier) {
+                    setIdentifierError(error.errors.identifier);
+                }
                 if (error.errors.password) {
                     setPasswordError(error.errors.password);
                 }
@@ -73,7 +77,6 @@ function AuthForm({mode}: Props) {
     return (
         <div className={styles.authFormContainer}>
             <form onSubmit={handleSubmit} className={styles.authForm}>
-            {generalError && <p className={styles.errorMessage}>{generalError}</p>}
                 {mode === "signup" && (
                     <>
                         <h2 className={styles.h2}>Register</h2>
@@ -125,6 +128,8 @@ function AuthForm({mode}: Props) {
                         }} className={styles.inputField} />
                     </div>
                 )}
+                {generalError && <p className={`${styles.errorMessage} ${styles.generalError}`}>{generalError}</p>}
+
                 <button type="submit" className={styles.btn}>{mode === "login" ? "Sign In" : "Register"}</button>
             </form>
         </div>

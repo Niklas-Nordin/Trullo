@@ -56,9 +56,16 @@ export const signUp = async (req: Request, res: Response) => {
 export const signIn = async (req: Request, res: Response) => {
   try {
     const { identifier, password } = req.body;
+    const errors: Record<string, string> = {};
 
-    if (!password || !identifier) {
-      return res.status(400).json({ message: "Login credentials required" });
+    // if (!password || !identifier) {
+    //   return res.status(400).json({ message: "Login credentials required" });
+    // }
+    if (!identifier) errors.identifier = "Username or email is required";
+    if (!password) errors.password = "Password is required";
+
+    if (Object.keys(errors).length > 0) {
+      return res.status(400).json({ errors });
     }
 
     const user = await User.findOne({ $or: [{ email: identifier }, { username: identifier }] });
@@ -67,7 +74,7 @@ export const signIn = async (req: Request, res: Response) => {
     console.log("identifier", identifier);
 
     if (!user) {
-      return res.status(400).json({ message: "Invalid login credentials 1" });
+      return res.status(400).json({ message: "Invalid login credentials" });
     }
 
     const matchPassword = await bcrypt.compare(password, user.password);
@@ -75,7 +82,7 @@ export const signIn = async (req: Request, res: Response) => {
     console.log("matchPassword", matchPassword);
 
     if (!matchPassword) {
-      return res.status(400).json({ message: "Invalid login credentials 2" });
+      return res.status(400).json({ message: "Invalid login credentials" });
     }
 
 
