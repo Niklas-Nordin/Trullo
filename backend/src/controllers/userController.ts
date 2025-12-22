@@ -41,12 +41,10 @@ export const signUp = async (req: Request, res: Response) => {
       return res.status(400).json({ errors });
     }
 
-    const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
-
     const newUser = await User.create({
       username,
       email,
-      password: hashedPassword,
+      password,
     });
 
     res.status(201).json({ message: "User created", user: newUser });
@@ -65,15 +63,21 @@ export const signIn = async (req: Request, res: Response) => {
 
     const user = await User.findOne({ $or: [{ email: identifier }, { username: identifier }] });
 
+    console.log("user", user);
+    console.log("identifier", identifier);
+
     if (!user) {
-      return res.status(400).json({ message: "Invalid login credentials" });
+      return res.status(400).json({ message: "Invalid login credentials 1" });
     }
 
     const matchPassword = await bcrypt.compare(password, user.password);
 
+    console.log("matchPassword", matchPassword);
+
     if (!matchPassword) {
-      return res.status(400).json({ message: "Invalid login credentials" });
+      return res.status(400).json({ message: "Invalid login credentials 2" });
     }
+
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET as string, {
       expiresIn: "1h",
@@ -86,7 +90,11 @@ export const signIn = async (req: Request, res: Response) => {
       sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax"
     });
 
-    res.status(200).json({ message: "Login successful", token: token, user: user });
+    res.status(200).json({ message: "Login successful", token: token, user: {
+      id: user._id,
+      username: user.username,
+      email: user.email
+    } });
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
   }
@@ -169,7 +177,7 @@ export const updateUser = async (req: ProtectedRequest, res: Response) => {
       if (password.length < 8) {
         return res.status(400).json({ message: "Password must be at least 8 characters long" });
       }
-      user.password = password;
+      user.password = await bcrypt.hash(password, SALT_ROUNDS);
     }
 
     await user.save();
