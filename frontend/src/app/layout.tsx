@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import jwt from "jsonwebtoken";
+import { cookies } from "next/headers";
+import {getAuthStatus} from "@/lib/auth";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,18 +21,24 @@ export const metadata: Metadata = {
   description: "This is an app where you can manage your projects and tasks.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const auth =  await getAuthStatus();
+  const isLoggedIn = auth.isLoggedIn;
+
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased layout`}
       >
-        <Navbar />
-        {children}
+        <Navbar isLoggedIn={isLoggedIn} />
+        <main className="main">
+          {children}
+        </main>
       </body>
     </html>
   );

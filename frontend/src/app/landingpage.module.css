@@ -7,9 +7,9 @@
 }
 
 .container {
-    background: linear-gradient(to top left, rgb(18, 42, 114), rgb(84, 120, 153));
-    color: white;
+    width: 100%;
     min-height: 100vh;
+    color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
