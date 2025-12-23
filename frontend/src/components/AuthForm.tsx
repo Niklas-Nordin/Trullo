@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signUp, login } from "@/lib/api";
 import styles from "./AuthForm.module.css";
+import Link from "next/link";
 
 type Props = {
     mode: "login" | "signup";
@@ -131,6 +132,9 @@ function AuthForm({mode}: Props) {
                 {generalError && <p className={`${styles.errorMessage} ${styles.generalError}`}>{generalError}</p>}
 
                 <button type="submit" className={styles.btn}>{mode === "login" ? "Sign In" : "Register"}</button>
+                {mode === "login" && (
+                    <p className={styles.registerPageLink}>Don't have an account? <Link href="/register"><span>Register</span></Link></p>
+                )}
             </form>
         </div>
     );

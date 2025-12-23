@@ -1,0 +1,23 @@
+.wave {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40%;
+}
+
+.container {
+    background: linear-gradient(to top left, rgb(18, 42, 114), rgb(84, 120, 153));
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.title {
+    font-size: 36pt;
+    text-align: center;
+}
+

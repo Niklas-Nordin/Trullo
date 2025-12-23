@@ -1,0 +1,10 @@
+.navbarContainer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    position: fixed;
+    z-index: 100;
+    color: white;
+}
