@@ -216,3 +216,17 @@ export const deleteUser = async (req: ProtectedRequest, res: Response) => {
     res.status(500).json({ message: "Server error", error });
   }
 };
+
+export const logout = async (req: Request, res: Response) => {
+  try {
+    res.clearCookie("token", { 
+      httpOnly: true, 
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
+      maxAge: 0
+    });
+    res.status(200).json({ message: "Logout successful" });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+};
