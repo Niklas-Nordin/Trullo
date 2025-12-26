@@ -1,0 +1,13 @@
+.dashboardContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.title {
+    font-size: 32pt;
+    font-style: italic;
+    color: white;
+}

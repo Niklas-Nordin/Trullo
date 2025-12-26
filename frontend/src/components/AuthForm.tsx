@@ -50,7 +50,7 @@ function AuthForm({mode}: Props) {
             } else {
                 res = await login(identifier, password);
                 if (res.message === "Login successful") {
-                    router.push("/signup");
+                    router.push("/dashboard");
                 }
             }
 

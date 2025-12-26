@@ -58,9 +58,6 @@ export const signIn = async (req: Request, res: Response) => {
     const { identifier, password } = req.body;
     const errors: Record<string, string> = {};
 
-    // if (!password || !identifier) {
-    //   return res.status(400).json({ message: "Login credentials required" });
-    // }
     if (!identifier) errors.identifier = "Username or email is required";
     if (!password) errors.password = "Password is required";
 
