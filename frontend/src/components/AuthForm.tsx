@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signUp, login } from "@/lib/api";
-import styles from "./AuthForm.module.css";
+import styles from "./authForm.module.css";
 import Link from "next/link";
 
 type Props = {
