@@ -46,11 +46,13 @@ function AuthForm({mode}: Props) {
                 res = await signUp(username, email, password);
                 if (res.message === "User created") {
                     router.push("/");
+                    router.refresh();
                 }
             } else {
                 res = await login(identifier, password);
                 if (res.message === "Login successful") {
                     router.push("/dashboard");
+                    router.refresh();
                 }
             }
 

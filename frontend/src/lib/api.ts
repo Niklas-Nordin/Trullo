@@ -32,3 +32,18 @@ export async function signUp(username: string, email: string, password: string) 
 
     return data;
 }
+
+export async function logout() {
+    const res = await fetch(`${API_URL}/users/logout`, {
+        method: 'POST',
+        credentials: 'include',
+    });
+
+    const data = await res.json();
+
+    if(!res.ok) {
+        throw data
+    }
+
+    return data;
+}

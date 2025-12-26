@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-import jwt from "jsonwebtoken";
-import { cookies } from "next/headers";
 import {getAuthStatus} from "@/lib/auth";
 
 const geistSans = Geist({

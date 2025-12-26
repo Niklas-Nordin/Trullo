@@ -1,11 +1,12 @@
 import Link from "next/link";
 import style from "./navbar.module.css"
+import LogoutButton from "./LogoutButton";
 
 type Props = {
   isLoggedIn: boolean;
 }
 
-async function Navbar({ isLoggedIn }: Props) {
+function Navbar({ isLoggedIn }: Props) {
 
   return (
     <div className={style.navbarContainer}>
@@ -19,6 +20,7 @@ async function Navbar({ isLoggedIn }: Props) {
       {isLoggedIn && (
         <>
           <Link href="/dashboard">Dashboard</Link>
+          <LogoutButton />
         </>
       )}
     </div>

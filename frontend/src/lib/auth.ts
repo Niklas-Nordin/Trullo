@@ -14,6 +14,10 @@
         return { isLoggedIn: false };
     }
 
+    if (token === "") {
+        return { isLoggedIn: false };
+    }
+
     try {
         const decoded = jwt.verify(
         token,
