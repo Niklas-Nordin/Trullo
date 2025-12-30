@@ -6,6 +6,8 @@ const SALT_ROUNDS = 10;
 
 interface IUser extends Document {
     username: string;
+    firstName:  string;
+    lastName: string;
     email: string;
     password: string;
     comparePassword: (candidate: string) => Promise<boolean>
@@ -14,12 +16,30 @@ interface IUser extends Document {
 const userSchema = new Schema<IUser>({
     username: {
         type: String,
-        required: true
+        required: true,
+        trim: true,
+        minlength: 1,
+    },
+    firstName: {
+        type: String,
+        trim: true,
+        required: true,
+        minlength: 1,
+        set: (name: string) => name.charAt(0).toUpperCase() + name.slice(1).toLowerCase(),
+    },
+    lastName: {
+        type: String,
+        trim: true,
+        required: true,
+        minlength: 1,
+        set: (name: string) => name.charAt(0).toUpperCase() + name.slice(1).toLowerCase(),
     },
     email: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        lowercase: true,
+        trim: true,
     },
     password: {
         type: String,

@@ -17,10 +17,14 @@ function AuthForm({mode}: Props) {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [identifierError, setIdentifierError] = useState("");
     const [usernameError, setUsernameError] = useState("");
     const [emailError, setEmailError] = useState("");
+    const [firstNameError, setFirstNameError] = useState("");
+    const [lastNameError, setLastNameError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [confirmPasswordError, setConfirmPasswordError] = useState("");
     const [generalError, setGeneralError] = useState("");
@@ -30,6 +34,8 @@ function AuthForm({mode}: Props) {
 
         setUsernameError("");
         setEmailError("");
+        setFirstNameError("");
+        setLastNameError("");
         setPasswordError("");
         setConfirmPasswordError("");
         setIdentifierError("");
@@ -43,7 +49,7 @@ function AuthForm({mode}: Props) {
         try {
             let res;
             if (mode === "signup") {
-                res = await signUp(username, email, password);
+                res = await signUp(firstName, lastName, username, email, password);
                 if (res.message === "User created") {
                     router.push("/");
                     router.refresh();
@@ -61,6 +67,12 @@ function AuthForm({mode}: Props) {
             if (error.errors) {
                 if (error.errors.username) {
                     setUsernameError(error.errors.username);
+                }
+                if (error.errors.firstName) {
+                    setFirstNameError(error.errors.firstName);
+                }
+                if (error.errors.lastName) {
+                    setLastNameError(error.errors.lastName);
                 }
                 if (error.errors.email) {
                     setEmailError(error.errors.email);
@@ -84,7 +96,20 @@ function AuthForm({mode}: Props) {
                     <>
                         <h2 className={styles.h2}>Register</h2>
                         <div className={styles.inputContainer}>
-                            {/* <label htmlFor="username">Username:</label> */}
+                            {firstNameError && <p className={styles.errorMessage}>{firstNameError}</p>}
+                            <input placeholder="First Name:" type="text" id="firstname" value={firstName} onChange={(e) => {
+                                setFirstName(e.target.value)
+                                if(firstNameError) setFirstNameError("")
+                            }} className={styles.inputField} />
+                        </div>
+                        <div className={styles.inputContainer}>
+                            {lastNameError && <p className={styles.errorMessage}>{lastNameError}</p>}
+                            <input placeholder="Last Name:"type="text" id="lastName" value={lastName} onChange={(e) => {
+                                setLastName(e.target.value)
+                                if(lastNameError) setLastNameError("")
+                            }} className={styles.inputField} />
+                        </div>
+                        <div className={styles.inputContainer}>
                             {usernameError && <p className={styles.errorMessage}>{usernameError}</p>}
                             <input placeholder="Username:" type="text" id="username" value={username} onChange={(e) => {
                                 setUsername(e.target.value)
@@ -92,7 +117,6 @@ function AuthForm({mode}: Props) {
                             }} className={styles.inputField} />
                         </div>
                         <div className={styles.inputContainer}>
-                            {/* <label htmlFor="email">Email:</label> */}
                             {emailError && <p className={styles.errorMessage}>{emailError}</p>}
                             <input placeholder="Email:" type="email" id="email" value={email} onChange={(e) => {
                                 setEmail(e.target.value)
@@ -105,7 +129,6 @@ function AuthForm({mode}: Props) {
 
                     <div className={styles.inputContainer}>
                         <h2 className={styles.h2}>Sign In</h2>
-                        {/* <label htmlFor="identifier">Email or Username:</label> */}
                         {identifierError && <p className={styles.errorMessage}>{identifierError}</p>}
                         <input placeholder="Email or Username:" type="text" id="identifier" value={identifier} onChange={(e) => {
                             setIdentifier(e.target.value)

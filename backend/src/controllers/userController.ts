@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import { error } from "console";
+import { set } from "mongoose";
 
 interface ProtectedRequest extends Request {
   user?: { id: string };
@@ -15,12 +15,14 @@ const SALT_ROUNDS = 10;
 
 export const signUp = async (req: Request, res: Response) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, firstName, lastName, email, password } = req.body;
     const errors: Record<string, string> = {};
 
     const existingEmail = await User.findOne({ email });
 
     if (!email) errors.email = "Email is required";
+    if(!firstName) errors.firstName = "First name is required";
+    if(!lastName) errors.lastName = "Last name is required";
     if (!username) errors.username = "Username is required";
     if (!password) errors.password = "Password is required";
 
@@ -44,6 +46,8 @@ export const signUp = async (req: Request, res: Response) => {
     const newUser = await User.create({
       username,
       email,
+      firstName,
+      lastName,
       password,
     });
 
