@@ -27,7 +27,6 @@ body {
 
 .layout {
   min-height: 100vh;
-  background: linear-gradient(to top left, rgb(18, 42, 114), rgb(84, 120, 153));
 }
 
 .main {

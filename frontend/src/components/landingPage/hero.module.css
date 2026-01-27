@@ -1,0 +1,40 @@
+.container {
+    background: linear-gradient(to top left, rgb(255,237,186), rgb(252,211,77), rgb(255,237,186));
+    width: 100%;
+    min-height: 100vh;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.title {
+    font-size: 36pt;
+    font-weight: bold;
+    text-align: center;
+}
+.subtitle {
+    font-size: 18pt;
+    text-align: center;
+}
+
+.kanbanImage {
+    margin: 2rem 0;
+    width: 70%;
+    max-width: 800px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.button {
+    background-color: black;
+    color: white;
+    width: 80%;
+    padding: 1rem 2rem;
+    font-size: 18pt;
+    font-weight: bold;
+    border-radius: 5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}

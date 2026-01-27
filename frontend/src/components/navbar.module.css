@@ -6,9 +6,24 @@
     position: fixed;
     top: 0;
     height: 4rem;
-    padding-right: 1.5rem;
+    padding: 1rem;
     align-items: center;
     z-index: 10;
-    color: white;
-    background-color: rgba(0, 0, 0, 0.233);
+    color: black;
+    background-color: white;
+}
+
+.logo {
+    height: 2.5rem;
+    cursor: pointer;
+    margin-right: auto;
+}
+
+.profileButton {
+    filter: invert(1);
+    cursor: pointer;
+}
+
+.profileButton :hover {
+    filter: invert(0.3)
 }
