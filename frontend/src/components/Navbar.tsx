@@ -15,20 +15,18 @@ function Navbar({ isLoggedIn }: Props) {
       {!isLoggedIn && (
         <>
           <Link href="/">Home</Link>
-          <Link href="/auth/register">Register</Link>
-          <Link href="/auth/login">Sign In</Link>
+          <Link href="/">About</Link>
+          <Link href="/">Contact</Link>
         </>
       )}
       {isLoggedIn && (
         <>
           <Link href="/dashboard">Dashboard</Link>
           <Link href="/projects">Projects</Link>
-          <Link href="/profile" className={style.profileButton}>
-            <Image src="/user-profile-icon.svg" alt="Profile" width={24} height={24} />
-          </Link>
           <LogoutButton />
         </>
       )}
+      <Link href="/auth"><img className={style.profileButton} src="/user-profile-icon.svg" alt="Profile icon" /></Link>
     </div>
   );
 }
