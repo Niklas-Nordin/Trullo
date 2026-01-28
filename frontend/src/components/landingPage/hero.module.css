@@ -7,22 +7,25 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 2.5rem;
+    padding: 1rem;
 }
 
 .title {
-    font-size: 36pt;
+    font-size: 34pt;
     font-weight: bold;
     text-align: center;
 }
 .subtitle {
-    font-size: 18pt;
+    font-size: 14pt;
     text-align: center;
 }
 
 .kanbanImage {
-    margin: 2rem 0;
+    /* margin: 2rem 0; */
     width: 70%;
-    max-width: 800px;
+    max-width: 500px;
+    
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
