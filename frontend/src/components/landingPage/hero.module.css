@@ -39,5 +39,9 @@
     font-weight: bold;
     border-radius: 5rem;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    border-bottom: solid 4px rgb(168, 168, 168);
+}
+
+.button:hover {
+    transform: scale(1.03);
 }
