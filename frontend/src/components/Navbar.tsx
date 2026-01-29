@@ -1,7 +1,6 @@
 import Link from "next/link";
 import style from "./navbar.module.css"
-import LogoutButton from "./LogoutButton";
-import Image from "next/image";
+import LogoutButton from "./auth/LogoutButton";
 
 type Props = {
   isLoggedIn: boolean;

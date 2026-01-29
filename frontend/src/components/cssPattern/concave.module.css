@@ -1,0 +1,19 @@
+.concave{
+    margin-top: auto;
+}
+
+.bottom-wave-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    line-height: 0;
+    z-index: 0;
+}
+
+.bottom-wave-container svg {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 180px;
+}

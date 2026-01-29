@@ -10,7 +10,7 @@ type Props = {
     mode: "login" | "signup";
 }
 
-function AuthForm({mode}: Props) {
+function AuthForm({ mode }: Props) {
 
     const router = useRouter();
     const [identifier, setIdentifier] = useState("");
@@ -94,31 +94,34 @@ function AuthForm({mode}: Props) {
             <form onSubmit={handleSubmit} className={styles.authForm}>
                 {mode === "signup" && (
                     <>
-                        <h2 className={styles.h2}>Register</h2>
                         <div className={styles.inputContainer}>
+                            <label className={styles.label} htmlFor="firstname">First Name:</label>
                             {firstNameError && <p className={styles.errorMessage}>{firstNameError}</p>}
-                            <input placeholder="First Name:" type="text" id="firstname" value={firstName} onChange={(e) => {
+                            <input type="text" id="firstname" value={firstName} onChange={(e) => {
                                 setFirstName(e.target.value)
                                 if(firstNameError) setFirstNameError("")
                             }} className={styles.inputField} />
                         </div>
                         <div className={styles.inputContainer}>
+                            <label className={styles.label} htmlFor="lastname">Last Name:</label>
                             {lastNameError && <p className={styles.errorMessage}>{lastNameError}</p>}
-                            <input placeholder="Last Name:"type="text" id="lastName" value={lastName} onChange={(e) => {
+                            <input type="text" id="lastName" value={lastName} onChange={(e) => {
                                 setLastName(e.target.value)
                                 if(lastNameError) setLastNameError("")
                             }} className={styles.inputField} />
                         </div>
                         <div className={styles.inputContainer}>
+                            <label className={styles.label} htmlFor="username">Username:</label>
                             {usernameError && <p className={styles.errorMessage}>{usernameError}</p>}
-                            <input placeholder="Username:" type="text" id="username" value={username} onChange={(e) => {
+                            <input type="text" id="username" value={username} onChange={(e) => {
                                 setUsername(e.target.value)
                                 if(usernameError) setUsernameError("")
                             }} className={styles.inputField} />
                         </div>
                         <div className={styles.inputContainer}>
+                            <label className={styles.label} htmlFor="email">Email:</label>
                             {emailError && <p className={styles.errorMessage}>{emailError}</p>}
-                            <input placeholder="Email:" type="email" id="email" value={email} onChange={(e) => {
+                            <input type="email" id="email" value={email} onChange={(e) => {
                                 setEmail(e.target.value)
                                 if(emailError) setEmailError("")
                             }} className={styles.inputField} />
@@ -128,27 +131,27 @@ function AuthForm({mode}: Props) {
                 {mode === "login" && (
 
                     <div className={styles.inputContainer}>
-                        <h2 className={styles.h2}>Sign In</h2>
+                        <label className={styles.label} htmlFor="identifier">Email or Username:</label>
                         {identifierError && <p className={styles.errorMessage}>{identifierError}</p>}
-                        <input placeholder="Email or Username:" type="text" id="identifier" value={identifier} onChange={(e) => {
+                        <input type="text" id="identifier" value={identifier} onChange={(e) => {
                             setIdentifier(e.target.value)
                             if(identifierError) setIdentifierError("")
                         }} className={styles.inputField} />
                     </div>
                 )}
                 <div className={styles.inputContainer}>
-                    {/* <label htmlFor="password">Password:</label> */}
+                    <label className={styles.label} htmlFor="password">Password:</label>
                     {passwordError && <p className={styles.errorMessage}>{passwordError}</p>}
-                    <input placeholder="Password:" type="password" id="password" value={password} onChange={(e) => {
+                    <input type="password" id="password" value={password} onChange={(e) => {
                         setPassword(e.target.value)
                         if(passwordError) setPasswordError("")
                     }} className={styles.inputField} />
                 </div>
                 {mode === "signup" && (
                     <div className={styles.inputContainer}>
-                        {/* <label htmlFor="confirmPassword">Confirm Password:</label> */}
+                        <label className={styles.label} htmlFor="confirmPassword">Confirm Password:</label>
                         {confirmPasswordError && <p className={styles.errorMessage}>{confirmPasswordError}</p>}
-                        <input placeholder="Confirm Password:" type="password" id="confirmPassword" value={confirmPassword} onChange={(e) => {
+                        <input type="password" id="confirmPassword" value={confirmPassword} onChange={(e) => {
                             setConfirmPassword(e.target.value)
                             if(confirmPasswordError) setConfirmPasswordError("")
                         }} className={styles.inputField} />
@@ -157,9 +160,6 @@ function AuthForm({mode}: Props) {
                 {generalError && <p className={`${styles.errorMessage} ${styles.generalError}`}>{generalError}</p>}
 
                 <button type="submit" className={styles.btn}>{mode === "login" ? "Sign In" : "Register"}</button>
-                {mode === "login" && (
-                    <p className={styles.registerPageLink}>Don't have an account? <Link href="/register"><span>Register</span></Link></p>
-                )}
             </form>
         </div>
     );

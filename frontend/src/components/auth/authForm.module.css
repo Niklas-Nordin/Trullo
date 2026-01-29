@@ -11,7 +11,8 @@
 }
 
 .authFormContainer {
-    min-height: 100vh;
+    width: 100%;
+    min-height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -19,39 +20,43 @@
 }
 
 .authForm {
-    width: 40%;
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    padding: 1rem;
-    border: 2px solid grey;
-    border-radius: 10px;
-}
-
-.inputContainer {
+    width: 70%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 1rem;
+}
+
+.inputContainer {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    padding: 0 0 0.5rem 1rem;
 }
 
 .inputField {
-    width: 90%;
-    background-color: white;
+    width: 100%;
+    background-color: rgb(236, 236, 236);
     border: 1px solid black;
-    padding: 0.5rem 0.5rem 0.5rem 0;
+    padding: 0.5rem 0.5rem 0.5rem 1rem;
     border: none;
+    border-radius: 50px;
     border-bottom: 1px solid black;
 }
 
 .btn {
-    width: 50%;
-    padding: 0.5rem;
-    background-color: blue;
+    width: 90%;
+    padding: 0.6rem;
+    background-color: black;
     color: white;
+    border-radius: 50px;
     cursor: pointer;
     margin: 1rem auto;
+    font-weight: bold;
 }
 
 .registerPageLink {
