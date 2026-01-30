@@ -12,10 +12,13 @@ function authPage() {
     <div className={styles.authContainer}>
       <div className={styles.centerContent}>
         <div className={styles.toggleContainer}>
-          <button onClick={() => setMode("login")}>Sign In</button>
-          <button onClick={() => setMode("signup")}> Register</button>
+          <span className={styles.slider} data-mode={mode} />
+          <button className={`${styles.toggleButton}`} onClick={() => setMode("login")}>Sign In</button>
+          <button className={`${styles.toggleButton}`} onClick={() => setMode("signup")}>Register</button>
         </div>
-        <AuthForm mode={mode} />
+        <div className={styles.formWrapper}>
+          <AuthForm mode={mode} />
+        </div>
       </div>
       <Concave />
     </div>
