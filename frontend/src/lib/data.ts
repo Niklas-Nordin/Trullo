@@ -15,3 +15,36 @@ export const steps = [
         description: "Create your first task and assign it to your team."
     }
 ]
+
+export const trustedByLogos = [
+    {
+        name: "Lumora"
+    },
+    {
+        name: "Nexvia"
+    },
+    {
+        name: "Stravico"
+    },
+    {
+        name: "Bluecrest"
+    },
+    {
+        name: "Vanture"
+    },
+    {
+        name: "Orbinex"
+    },
+    {
+        name: "Avelora"
+    },
+    {
+        name: "Quantix"
+    },
+    {
+        name: "Solvantech"
+    },
+    {
+        name: "Cresvia"
+    }
+]
