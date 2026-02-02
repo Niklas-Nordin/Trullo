@@ -8,16 +8,16 @@
     align-items: center;
     justify-content: center;
     gap: 2.5rem;
-    padding: 1rem;
+    padding: 1.5rem;
 }
 
 .title {
-    font-size: 34pt;
+    font-size: 3rem;
     font-weight: bold;
     text-align: center;
 }
 .subtitle {
-    font-size: 14pt;
+    font-size: 1.2rem;
     text-align: center;
 }
 

@@ -28,7 +28,7 @@ function TrustedBySection() {
 
   return (
     <section className={styles.container}>
-        <h2 className={styles.sectionTitle}>Trusted by leading companies I've made up</h2>
+        <h2 className={styles.sectionTitle}>Trusted by non true leading companies</h2>
         <div className={styles.marquee} ref={marqueeRef}>
             <div className={styles.track} ref={trackRef}>
                 {Array.from({length: copies}).map((_, copyIdx) => (

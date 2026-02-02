@@ -1,0 +1,76 @@
+.container {
+    width: 100%;
+    padding: 2rem 2rem;
+    text-align: center;
+}
+
+.title {
+    font-size: 2.1rem;
+    font-weight: bold;
+    margin: 2rem 0;
+}
+
+.cardContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.card {
+    width: 90%;
+    min-height: 230px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    text-align: center;
+    gap: 1rem;
+}
+
+.stars {
+    width: 30%;
+}
+
+.reviewText {
+    text-align: start;
+    font-size: 1rem;
+    font-style: italic;
+}
+
+.reviewerInfo {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: rgb(212, 212, 212);
+}
+
+.reviewerDetails {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.reviewerName {
+    font-weight: bold;
+}
+
+.reviewerRole {
+    font-size: 0.9rem;
+    color: rgb(124, 124, 124);
+}
