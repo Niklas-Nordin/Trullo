@@ -9,6 +9,7 @@
 .accordionTitle {
     font-size: 2.1rem;
     font-weight: bold;
+    margin: 1rem 0 2rem 0;
 }
 
 .accordionList {
