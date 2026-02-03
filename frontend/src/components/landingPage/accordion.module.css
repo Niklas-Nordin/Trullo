@@ -1,0 +1,48 @@
+.accordionContainer {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.accordionTitle {
+    font-size: 2.1rem;
+    font-weight: bold;
+}
+
+.accordionList {
+    width: 100%;
+}
+
+.accordionQuestion {
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between; /* för ev. ikon */
+  align-items: center;
+  background: none;
+  border: none;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.icon {
+    font-size: 1.5rem;
+}
+
+.accordionItem {
+    background-color: white;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
+}
+
+.accordionAnswer {
+    overflow: hidden;
+    font-size: 1rem;
+}

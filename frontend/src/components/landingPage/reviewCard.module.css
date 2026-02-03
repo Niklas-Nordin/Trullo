@@ -1,7 +1,11 @@
 .container {
-    width: 100%;
-    padding: 2rem 2rem;
+    width: 90%;
+    padding: 2rem 0rem;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .title {
@@ -11,6 +15,7 @@
 }
 
 .cardContainer {
+    width: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -19,12 +24,12 @@
 }
 
 .card {
-    width: 90%;
+    width: 100%;
     min-height: 230px;
     background-color: rgb(255, 255, 255);
     border-radius: 1rem;
     padding: 2rem;
-    box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
     display: flex;
     flex-direction: column;
     justify-content: center;
