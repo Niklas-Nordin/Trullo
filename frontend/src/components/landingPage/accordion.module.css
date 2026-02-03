@@ -20,7 +20,7 @@
   text-align: left;
   cursor: pointer;
   display: flex;
-  justify-content: space-between; /* för ev. ikon */
+  justify-content: space-between;
   align-items: center;
   background: none;
   border: none;
