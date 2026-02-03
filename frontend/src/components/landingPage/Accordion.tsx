@@ -20,6 +20,7 @@ function Accordion() {
 
   return (
     <div className={styles.accordionContainer}>
+        {/* <div className={styles.div}></div> */}
         <h2 className={styles.accordionTitle}>Frequently Asked Questions</h2>
         <ul className={styles.accordionList}>
             {faqItems.map((item) => (
