@@ -30,18 +30,4 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.button {
-    background-color: black;
-    color: white;
-    width: 80%;
-    padding: 1rem 2rem;
-    font-size: 18pt;
-    font-weight: bold;
-    border-radius: 5rem;
-    cursor: pointer;
-    border-bottom: solid 4px rgb(168, 168, 168);
-}
 
-.button:hover {
-    transform: scale(1.03);
-}

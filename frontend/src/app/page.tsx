@@ -6,6 +6,7 @@ import Wave from "@/components/cssPattern/Wave";
 import TrustedBySection from "@/components/landingPage/TrustedBySection";
 import ReviewCard from "@/components/landingPage/ReviewCard";
 import Accordion from "@/components/landingPage/Accordion";
+import ReadyToStartBox from "@/components/landingPage/ReadyToStartBox";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <TrustedBySection />
       <ReviewCard />
       <Accordion />
+      <ReadyToStartBox />
     </>
   );
 }

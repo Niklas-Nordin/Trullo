@@ -1,0 +1,24 @@
+.button {
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    border-radius: 5rem;
+    cursor: pointer;
+    border-bottom: solid 4px rgb(168, 168, 168);
+}
+
+.button:hover {
+    transform: scale(1.03);
+}
+
+.large {
+    width: 80%;
+    padding: 1rem 2rem;
+    font-size: 1.5rem;
+}
+
+.small {
+    width: 50%;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+}
