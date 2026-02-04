@@ -13,10 +13,45 @@
     background-color: black;
 }
 
+.navLinks {
+    display: none;
+}
+
+.open {
+    width: 60%;
+    min-height: 50vh;
+    background-color: rgb(136, 136, 136);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 10;
+    font-size: 1.5rem;
+}
+
+.close {
+    width: 2rem;
+    position: absolute;
+    top: 15;
+    right: 15;
+    z-index: 20;
+    cursor: pointer;
+}
+
 .logo {
     height: 2rem;
     cursor: pointer;
     margin-right: auto;
+}
+
+.hamburgerMenu {
+    width: 2rem;
+    cursor: pointer;
 }
 
 .profileButton {
@@ -27,5 +62,29 @@
 }
 
 .profileButton:hover {
-    filter: invert(0.4);
+    filter: invert(0.2);
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5);
+    z-index: 5;
+}
+
+@media (min-width: 768px) {
+    .navLinks {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .hamburgerMenu, .open, .overlay, .close {
+        display: none;
+    }
 }
