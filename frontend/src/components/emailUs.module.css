@@ -60,4 +60,5 @@
     border-radius: 3rem;
     margin: auto;
     font-weight: 800;
+    border-bottom: 3px solid gray;
 }

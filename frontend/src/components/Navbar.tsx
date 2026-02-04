@@ -10,7 +10,7 @@ function Navbar({ isLoggedIn }: Props) {
 
   return (
     <div className={style.navbarContainer}>
-      <Link className={style.logo} href="/"><img className={style.logo} src="/NordinDev-logo.png" alt="NordinDev logo" /></Link>
+      <Link className={style.logo} href="/"><img className={style.logo} src="/FlowLine.png" alt="FlowLine logo" /></Link>
       {!isLoggedIn && (
         <>
           <Link href="/">Home</Link>

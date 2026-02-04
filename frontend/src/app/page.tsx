@@ -8,6 +8,7 @@ import ReviewCard from "@/components/landingPage/ReviewCard";
 import Accordion from "@/components/landingPage/Accordion";
 import ReadyToStartBox from "@/components/landingPage/ReadyToStartBox";
 import EmailUs from "@/components/EmailUs";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
       <Accordion />
       <ReadyToStartBox />
       <EmailUs />
+      <Footer />
     </>
   );
 }
