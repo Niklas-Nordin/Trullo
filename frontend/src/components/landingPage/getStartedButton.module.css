@@ -5,6 +5,7 @@
     border-radius: 5rem;
     cursor: pointer;
     border-bottom: solid 4px rgb(168, 168, 168);
+    max-width: 20rem;
 }
 
 .button:hover {

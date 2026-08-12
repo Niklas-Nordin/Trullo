@@ -43,6 +43,8 @@ export const signUp = async (req: Request, res: Response) => {
       return res.status(400).json({ errors });
     }
 
+    console.log("creating user...")
+
     const newUser = await User.create({
       username,
       email,
@@ -54,6 +56,7 @@ export const signUp = async (req: Request, res: Response) => {
     res.status(201).json({ message: "User created", user: newUser });
   } catch (error) {
     res.status(500).json({ message: "Something went wrong. Please try again later.", error });
+    console.error("Error in signUp:", error);
   }
 };
 
